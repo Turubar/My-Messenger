@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyMessenger", "MyMessenger\MyMessenger.csproj", "{CE64587A-A616-49F7-A1B9-B40A681F2F74}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{71948C0F-CDA6-444E-BF27-963931C644B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{CE64587A-A616-49F7-A1B9-B40A681F2F74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE64587A-A616-49F7-A1B9-B40A681F2F74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE64587A-A616-49F7-A1B9-B40A681F2F74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71948C0F-CDA6-444E-BF27-963931C644B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71948C0F-CDA6-444E-BF27-963931C644B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71948C0F-CDA6-444E-BF27-963931C644B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71948C0F-CDA6-444E-BF27-963931C644B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
