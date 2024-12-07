@@ -1,3 +1,4 @@
+import { HubConnectionBuilder } from "@microsoft/signalr"
 import { WaitingRoom } from "./components/WaitingRoom";
 
 function App() {
@@ -10,12 +11,13 @@ function App() {
     try {
       await connection.start();
       await connection.invoke("JoinChat", {userName, chatRoom});
+
+      console.log(connection);
     }
     catch (error) {
       console.log(error);
     }
   }
-
 
 
   return (
