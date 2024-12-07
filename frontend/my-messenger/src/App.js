@@ -1,7 +1,26 @@
+import { WaitingRoom } from "./components/WaitingRoom";
+
 function App() {
+  const joinChat = async (userName, chatRoom) => {
+    var connection = new HubConnectionBuilder()
+      .withUrl("http://localhost:5082/chat")
+      .withAutomaticReconnect()
+      .build();
+
+    try {
+      await connection.start();
+      await connection.invoke("JoinChat", {userName, chatRoom});
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+
+
+
   return (
-    <div>
-      <h1>Hello, React!</h1>
+    <div className="container-fluid min-vh-100 p-0 d-flex justify-content-center align-items-center">
+      <WaitingRoom joinChat={joinChat}/>
     </div>
   );
 }
