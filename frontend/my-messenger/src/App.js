@@ -30,10 +30,19 @@ function App() {
     }
   }
 
+  const sendMessage = (message) => {
+    connection.invoke("SendMessage", message);
+  }
+
+  const closeChat = async () => {
+    await connection.stop();
+    setConnection(null);
+    setMessages([]);
+  }
 
   return (
     <div className="container-fluid min-vh-100 p-0 d-flex justify-content-center align-items-center">
-      {connection ? <Chat messages={messages} chatRoom={chatRoom} /> : <WaitingRoom joinChat={joinChat}/>}
+      {connection ? <Chat messages={messages} chatRoom={chatRoom} sendMessage={sendMessage} closeChat={closeChat} /> : <WaitingRoom joinChat={joinChat}/>}
     </div>
   );
 }
