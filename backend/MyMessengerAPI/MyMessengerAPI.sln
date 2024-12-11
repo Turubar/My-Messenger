@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyMessengerAPI", "MyMessengerAPI\MyMessengerAPI.csproj", "{B1484654-036B-40A6-BFF9-376E784BEC5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{E8404B5B-F2AE-499B-BA1B-0CF33FF96B0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Persistence\Persistence.csproj", "{04739F09-0662-4FDB-ADB3-D38AB5B688E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{B1484654-036B-40A6-BFF9-376E784BEC5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1484654-036B-40A6-BFF9-376E784BEC5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1484654-036B-40A6-BFF9-376E784BEC5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8404B5B-F2AE-499B-BA1B-0CF33FF96B0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8404B5B-F2AE-499B-BA1B-0CF33FF96B0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8404B5B-F2AE-499B-BA1B-0CF33FF96B0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8404B5B-F2AE-499B-BA1B-0CF33FF96B0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04739F09-0662-4FDB-ADB3-D38AB5B688E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04739F09-0662-4FDB-ADB3-D38AB5B688E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04739F09-0662-4FDB-ADB3-D38AB5B688E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04739F09-0662-4FDB-ADB3-D38AB5B688E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
