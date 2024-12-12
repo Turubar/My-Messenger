@@ -5,17 +5,26 @@ using MyMessengerAPI.Contracts.Users;
 namespace MyMessengerAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        // Регистрация пользователя
-        [Route("[controller]/registration")]
+        private readonly UsersService _usersService;
+        public UsersController(UsersService usersService)
+        {
+            _usersService = usersService;
+        }
+
+        // Маршрут для регистрации новых пользователей
+        [Route("registration")]
         [HttpPost]
         public async Task<ActionResult> Registration(RegistrationUserRequest request, UsersService usersService)
         {
-            var result = await usersService.Register(request.Login, request.Password);
+            var result = await usersService.Registration(request.Login, request.Password);
 
-            return Ok();
+            if (result.IsSuccess)
+                return Ok("Пользователь успешно зарегистрирован");
+            else
+                return BadRequest(result.Error);
         }
     }
 }

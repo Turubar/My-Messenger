@@ -11,7 +11,7 @@ namespace Core.Models
     {
         // Публичные константы (для валидации и атрибутов dto)
 
-        public const int MIN_LOGIN_LENGTH = 6;
+        public const int MIN_LOGIN_LENGTH = 4;
         public const int MAX_LOGIN_LENGTH = 20;
 
         public const int MIN_PASSWORD_LENGTH = 8;
@@ -41,7 +41,7 @@ namespace Core.Models
         // ---
 
         // Публичный статический метод для валидации и создания модели User
-        public static Result<User> Create(string login, string passwordHash)
+        public static Result<User> Create(Guid id, string login, string passwordHash, DateTime registeredDate)
         {
             // Валидация свойств
 
@@ -60,7 +60,7 @@ namespace Core.Models
 
             // Создание User
 
-            var user = new User(Guid.NewGuid(), login, passwordHash, DateTime.UtcNow);
+            var user = new User(id, login, passwordHash, registeredDate);
 
             return Result.Success(user);
 

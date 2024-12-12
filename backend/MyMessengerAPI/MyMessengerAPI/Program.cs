@@ -1,5 +1,11 @@
+using Application.Interfaces.Authentication;
+using Application.Interfaces.Repositories;
+using Application.Services;
+using Infrastructure;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +18,11 @@ services.AddDbContext<MyMessengerDbContext>(options =>
 {
     options.UseNpgsql(configuration.GetConnectionString("Connection"));
 });
+
+services.AddScoped<IUserRepository, UserRepository>();
+services.AddScoped<UsersService>();
+
+services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 var app = builder.Build();
 
