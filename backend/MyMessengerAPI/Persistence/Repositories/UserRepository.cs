@@ -10,6 +10,13 @@ namespace Persistence.Repositories
 {
     public class UserRepository : IUserRepository
     {
+        private readonly MyMessengerDbContext _context;
+
+        public UserRepository(MyMessengerDbContext context)
+        {
+            _context = context;
+        }
+
         public Task Add(User user)
         {
             throw new NotImplementedException();
