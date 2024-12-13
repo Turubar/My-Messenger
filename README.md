@@ -71,8 +71,10 @@ __Аутентификация должна быть реализована на
   - База данных PostgreSQL
   - ORM Entity Framework Core
   - SignalR
+  - Redis
 * Фронтенд:
   - React
+  - Material UI
   - Bootstrap 5
 
 
