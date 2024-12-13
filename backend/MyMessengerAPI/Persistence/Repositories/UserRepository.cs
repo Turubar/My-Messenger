@@ -39,21 +39,27 @@ namespace Persistence.Repositories
             }
             catch
             {
-                return Result.Failure<User>("Что-то пошло не так...");
+                return Result.Failure("Что-то пошло не так...");
             }
         }
 
         public async Task<Result<User>> GetByLogin(string login)
         {
-            var userEntity = await _context.Users
+            try
+            {
+                var userEntity = await _context.Users
                 .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Login == login);
 
-            if (userEntity != null)
-                return User.Create(userEntity.Id, userEntity.Login, userEntity.PasswordHash, userEntity.RegisteredDate);
-            else
-                return Result.Failure<User>("Пользователь не найден");
-            
+                if (userEntity != null)
+                    return User.Create(userEntity.Id, userEntity.Login, userEntity.PasswordHash, userEntity.RegisteredDate);
+                else
+                    return Result.Failure<User>("Пользователь не найден");
+            }
+            catch
+            {
+                return Result.Failure<User>("Что-то пошло не так...");
+            }
         }
     }
 }

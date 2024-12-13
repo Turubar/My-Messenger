@@ -1,11 +1,81 @@
-import { Box, Button, Checkbox, FormControlLabel, Link, TextField, Typography } from '@mui/material';
+import { Alert, Box, Button, Checkbox, CircularProgress, FormControlLabel, Link, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import { registerUserAPI } from '../api/users';
+import { Navigate, useNavigate } from 'react-router-dom';
+
+const MIN_LOGIN_LENGTH = 4;
+const MAX_LOGIN_LENGTH = 20;
+
+const MIN_PASSWORD_LENGTH = 8;
+const MAX_PASSWORD_LENGTH = 30;
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
+
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [confirmedPassword, setConfirmedPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showProgress, setShowProgress] = useState(false);
+  
+  const [alert, setAlert] = useState({
+    severity: "success",
+    message: "",
+    visability: false
+  });
+
+
+  const registerUser = async () => {
+    if (login.length < MIN_LOGIN_LENGTH || login.length > MAX_LOGIN_LENGTH) {
+      showAlert("warning", `Длина логина должна быть [${MIN_LOGIN_LENGTH} - ${MAX_LOGIN_LENGTH}] символов`);
+      return;
+    }
+
+    if (password.length < MIN_PASSWORD_LENGTH || password.length > MAX_PASSWORD_LENGTH) {
+      showAlert("warning", `Длина пароля должна быть [${MIN_PASSWORD_LENGTH} - ${MAX_PASSWORD_LENGTH}] символов`);
+      return;
+    }
+
+    if (confirmedPassword.length < MIN_PASSWORD_LENGTH || confirmedPassword.length > MAX_PASSWORD_LENGTH) {
+      showAlert("warning", `Длина пароля должна быть [${MIN_PASSWORD_LENGTH} - ${MAX_PASSWORD_LENGTH}] символов`);
+      return;
+    }
+
+    if (password != confirmedPassword) {
+      showAlert("warning", "Пароли не совпадают");
+      return;
+    }
+
+    setShowProgress(prev => prev = true);
+
+    const alert = await registerUserAPI(login, password);
+    showAlert(alert.severity, alert.message);
+
+    setShowProgress(prev => prev = false);
+
+    if (alert.success) {
+      setInterval(() => {
+        navigate("/login")
+      }, 3000)
+    }
+  }
+
+  const showAlert = (severity, message) => {
+    setAlert({
+      severity: severity,
+      message: message,
+      visability: true
+    })
+
+    setTimeout(() => {
+      setAlert(prev => {
+        return {
+          ...prev,
+          visability: false
+        }
+      })
+    }, 4000)
+  }
 
   return (
     <Box
@@ -27,12 +97,14 @@ const RegisterPage = () => {
 
       <Box
         width={'425px'}
-        // component={'form'}
+        component={'form'}
+        onSubmit={(e) => e.preventDefault()}
         display={'flex'}
         flexDirection={'column'}
         borderRadius={'5px'}
         padding={'25px'}
         boxShadow={'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;'}
+        marginBottom={'25px'}
       >
         <TextField
           label="Введите логин"
@@ -95,6 +167,7 @@ const RegisterPage = () => {
 
         <Button
           variant="contained"
+          onClick={registerUser}
           size='large'
           sx={{
             padding: '12px',
@@ -110,6 +183,18 @@ const RegisterPage = () => {
         </Link>
       </Box>
 
+      <Alert variant="outlined" severity={alert.severity}
+        sx={{
+          fontSize: '16px',
+          visibility: alert.visability ? 'visible' : 'hidden',
+          marginBottom: '25px'
+        }}
+      >
+        {alert.message}
+      </Alert>
+      <CircularProgress sx={{
+        visibility: showProgress ? 'visible' : 'hidden'
+      }}/>
     </Box>
   );
 };

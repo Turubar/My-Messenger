@@ -47,13 +47,13 @@ namespace Core.Models
 
             if (string.IsNullOrEmpty(login) || login.Length < MIN_LOGIN_LENGTH || login.Length > MAX_LOGIN_LENGTH)
             {
-                return Result.Failure<User>($"Длина логина должна быть {MIN_LOGIN_LENGTH} - {MAX_LOGIN_LENGTH} символов");
+                return Result.Failure<User>($"Длина логина должна быть [{MIN_LOGIN_LENGTH} - {MAX_LOGIN_LENGTH}] символов");
             }
 
             // Проверяем на null, но не проверяем длину, так как это хэш
-            if (string.IsNullOrEmpty(login))
+            if (string.IsNullOrEmpty(passwordHash))
             {
-                return Result.Failure<User>($"Длина пароля должна быть {MIN_PASSWORD_LENGTH} - {MAX_PASSWORD_LENGTH} символов");
+                return Result.Failure<User>($"Длина пароля должна быть [{MIN_PASSWORD_LENGTH} - {MAX_PASSWORD_LENGTH}] символов");
             }
 
             // ---

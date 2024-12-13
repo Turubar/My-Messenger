@@ -1,4 +1,5 @@
-﻿using Application.Services;
+﻿using Application.Errors;
+using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using MyMessengerAPI.Contracts.Users;
 
@@ -15,16 +16,22 @@ namespace MyMessengerAPI.Controllers
         }
 
         // Маршрут для регистрации новых пользователей
-        [Route("registration")]
+        [Route("register")]
         [HttpPost]
         public async Task<ActionResult> Registration(RegistrationUserRequest request, UsersService usersService)
         {
             var result = await usersService.Registration(request.Login, request.Password);
 
             if (result.IsSuccess)
-                return Ok("Пользователь успешно зарегистрирован");
+                return Ok();
             else
-                return BadRequest(result.Error);
+                return BadRequest(new
+                {
+                    errors = new
+                    {
+                        message = result.Error
+                    }
+                });
         }
     }
 }
