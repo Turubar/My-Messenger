@@ -19,7 +19,7 @@ services.AddDbContext<MyMessengerDbContext>(options =>
     options.UseNpgsql(configuration.GetConnectionString("Connection"));
 });
 
-services.AddScoped<IUserRepository, UserRepository>();
+services.AddScoped<IUserRepository, UsersRepository>();
 services.AddScoped<UsersService>();
 
 services.AddScoped<IPasswordHasher, PasswordHasher>();

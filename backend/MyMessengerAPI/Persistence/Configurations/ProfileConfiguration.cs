@@ -14,11 +14,13 @@ namespace Persistence.Configurations
 
             builder
                 .HasOne(p => p.User)
-                .WithOne(u => u.Profile);
+                .WithOne(u => u.Profile)
+                .HasForeignKey<ProfileEntity>(p => p.UserId);
 
             builder
                 .HasOne(p => p.Avatar)
-                .WithOne(a => a.Profile);
+                .WithOne(a => a.Profile)
+                .HasForeignKey<ProfileEntity>(p => p.AvatarId);
         }
     }
 }

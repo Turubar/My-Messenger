@@ -12,8 +12,6 @@ namespace Persistence.Entities
 
         public string FileName { get; set; } = string.Empty;
 
-        public Guid ProfileId { get; set; }
-
         public ProfileEntity? Profile { get; set; }
     }
 }

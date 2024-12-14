@@ -1,5 +1,4 @@
-﻿using Application.Errors;
-using Application.Services;
+﻿using Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using MyMessengerAPI.Contracts.Users;
 

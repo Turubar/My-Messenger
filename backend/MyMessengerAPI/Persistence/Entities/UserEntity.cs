@@ -17,8 +17,6 @@ namespace Persistence.Entities
 
         public DateTime RegisteredDate { get; set; }
 
-        public Guid ProfileId { get; set; }
-
         public ProfileEntity? Profile { get; set; }
     }
 }
