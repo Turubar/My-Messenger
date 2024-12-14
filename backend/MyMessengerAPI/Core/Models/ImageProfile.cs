@@ -4,16 +4,23 @@ namespace Core.Models
 {
     public class ImageProfile
     {
-        public ImageProfile(string fileName)
+        // Приватный конструктор
+        public ImageProfile(Guid id, string fileName)
         {
+            Id = id;
             FileName = fileName;
         }
 
-        public Guid ProfileId { get; set; }
+        // Свойства модели
 
-        public string FileName { get; set; } = string.Empty;
+        public Guid Id { get; }
 
-        public static Result<ImageProfile> Create(string fileName)
+        public string FileName { get; }
+
+        // ---
+
+        // Публичный статический метод для валидации и создания модели ImageProfile
+        public static Result<ImageProfile> Create(Guid id, string fileName)
         {
             // Валидация свойств
 
@@ -24,7 +31,7 @@ namespace Core.Models
 
             // Создание ImageProfile
 
-            var imageProfile = new ImageProfile(fileName);
+            var imageProfile = new ImageProfile(id, fileName);
 
             return Result.Success(imageProfile);
 

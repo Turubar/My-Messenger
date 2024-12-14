@@ -8,13 +8,9 @@ using System.Threading.Tasks;
 
 namespace Persistence
 {
-    public class MyMessengerDbContext : DbContext
+    public class MyMessengerDbContext(DbContextOptions<MyMessengerDbContext> options) 
+        : DbContext(options)
     {
-        public MyMessengerDbContext(DbContextOptions<MyMessengerDbContext> options)
-        : base(options)
-        {
-        }
-
         public DbSet<UserEntity> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
