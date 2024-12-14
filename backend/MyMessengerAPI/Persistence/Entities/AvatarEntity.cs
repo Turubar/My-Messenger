@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Persistence.Entities
 {
-    public class ImageProfileEntity
+    public class AvatarEntity
     {
         public Guid Id { get; set; }
 
@@ -14,6 +14,6 @@ namespace Persistence.Entities
 
         public Guid ProfileId { get; set; }
 
-        public UserProfileEntity? ProfileEntity { get; set; }
+        public ProfileEntity? Profile { get; set; }
     }
 }

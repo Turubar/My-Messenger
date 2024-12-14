@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace Persistence.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UsersRepository : IUserRepository
     {
-        private readonly MyMessengerDbContext _context;
+        private readonly MyMessengerDbContext _dbContext;
 
-        public UserRepository(MyMessengerDbContext context)
+        public UsersRepository(MyMessengerDbContext context)
         {
-            _context = context;
+            _dbContext = context;
         }
 
         public async Task<Result> Add(User user)
@@ -32,8 +32,8 @@ namespace Persistence.Repositories
                     RegisteredDate = user.RegisteredDate,
                 };
 
-                await _context.Users.AddAsync(userEntity);
-                await _context.SaveChangesAsync();
+                await _dbContext.Users.AddAsync(userEntity);
+                await _dbContext.SaveChangesAsync();
 
                 return Result.Success();
             }
@@ -47,7 +47,7 @@ namespace Persistence.Repositories
         {
             try
             {
-                var userEntity = await _context.Users
+                var userEntity = await _dbContext.Users
                 .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Login == login);
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Persistence.Entities
 {
-    public class UserProfileEntity
+    public class ProfileEntity
     {
         public Guid Id { get; set; }
 
@@ -21,9 +21,9 @@ namespace Persistence.Entities
 
         public Guid UserId { get; set; }
 
-        public Guid ImageId { get; set; }
+        public Guid AvatarId { get; set; }
 
-        public ImageProfileEntity? Image { get; set; }
+        public AvatarEntity? Avatar { get; set; }
 
         public UserEntity? User { get; set; }
     }

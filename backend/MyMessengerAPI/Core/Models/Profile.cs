@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Models
 {
-    public class UserProfile
+    public class Profile
     {
         // Публичные константы (для валидации и атрибутов dto)
 
@@ -24,14 +24,14 @@ namespace Core.Models
         // ---
 
         // Приватный конструктор
-        private UserProfile(Guid id, string displayName, string status, string description, string searchTag, ImageProfile? image, User? user)
+        private Profile(Guid id, string displayName, string status, string description, string searchTag, Avatar? image, User? user)
         {
             Id = id;
             DisplayName = displayName;
             Status = status;
             Description = description;
             SearchTag = searchTag; 
-            Image = image;
+            Avatar = image;
             User = user;
         }
 
@@ -47,34 +47,34 @@ namespace Core.Models
 
         public string SearchTag { get; }
 
-        public ImageProfile? Image { get; }
+        public Avatar? Avatar { get; }
 
         public User? User { get; }
 
         // ---
 
         // Публичный статический метод для валидации и создания модели UserProfile
-        public static Result<UserProfile> Create(Guid id, string displayName, string status, string description, string searchTag, ImageProfile? image, User? user)
+        public static Result<Profile> Create(Guid id, string displayName, string status, string description, string searchTag, Avatar? avatar, User? user)
         {
             // Валидация свойств
 
             if (string.IsNullOrEmpty(displayName) || displayName.Length < MIN_DISPLAYNAME_LENGTH || displayName.Length > MAX_DISPLAYNAME_LENGTH)
-                return Result.Failure<UserProfile>($"Длина имени должна быть [{MIN_DISPLAYNAME_LENGTH} - {MAX_DISPLAYNAME_LENGTH}] символов");
+                return Result.Failure<Profile>($"Длина имени должна быть [{MIN_DISPLAYNAME_LENGTH} - {MAX_DISPLAYNAME_LENGTH}] символов");
 
             if (status.Length > MAX_STATUS_LENGTH)
-                return Result.Failure<UserProfile>($"Длина статуса должна быть не больше [{MAX_DISPLAYNAME_LENGTH}] символов");
+                return Result.Failure<Profile>($"Длина статуса должна быть не больше [{MAX_DISPLAYNAME_LENGTH}] символов");
 
             if (description.Length > MAX_DESCRIPTION_LENGTH)
-                return Result.Failure<UserProfile>($"Длина описания должна быть не больше [{MAX_DESCRIPTION_LENGTH}] символов");
+                return Result.Failure<Profile>($"Длина описания должна быть не больше [{MAX_DESCRIPTION_LENGTH}] символов");
 
             if (string.IsNullOrEmpty(searchTag) || searchTag.Length < MIN_SEARCHTAG_LENGTH || searchTag.Length > MAX_SEARCHTAG_LENGTH)
-                return Result.Failure<UserProfile>($"Длина тега должна быть [{MIN_SEARCHTAG_LENGTH} - {MAX_SEARCHTAG_LENGTH}] символов");
+                return Result.Failure<Profile>($"Длина тега должна быть [{MIN_SEARCHTAG_LENGTH} - {MAX_SEARCHTAG_LENGTH}] символов");
 
             // ---
 
             // Создание UserProfile
 
-            var userProfile = new UserProfile(id, displayName, status, description, searchTag, image, user);
+            var userProfile = new Profile(id, displayName, status, description, searchTag, avatar, user);
 
             return Result.Success(userProfile);
 

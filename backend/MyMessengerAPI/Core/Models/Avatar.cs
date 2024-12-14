@@ -2,10 +2,10 @@
 
 namespace Core.Models
 {
-    public class ImageProfile
+    public class Avatar
     {
         // Приватный конструктор
-        public ImageProfile(Guid id, string fileName)
+        public Avatar(Guid id, string fileName)
         {
             Id = id;
             FileName = fileName;
@@ -20,18 +20,18 @@ namespace Core.Models
         // ---
 
         // Публичный статический метод для валидации и создания модели ImageProfile
-        public static Result<ImageProfile> Create(Guid id, string fileName)
+        public static Result<Avatar> Create(Guid id, string fileName)
         {
             // Валидация свойств
 
             if (string.IsNullOrEmpty(fileName))
-                return Result.Failure<ImageProfile>("Имя файла не может быть пустым");
+                return Result.Failure<Avatar>("Имя файла не может быть пустым");
 
             // ---
 
             // Создание ImageProfile
 
-            var imageProfile = new ImageProfile(id, fileName);
+            var imageProfile = new Avatar(id, fileName);
 
             return Result.Success(imageProfile);
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Persistence.Configurations;
 using Persistence.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,15 @@ namespace Persistence
     {
         public DbSet<UserEntity> Users { get; set; }
 
+        public DbSet<ProfileEntity> Profiles { get; set; }
+
+        public DbSet<AvatarEntity> Avatars { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserEntity>().ToTable("Users");
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new AvatarConfiguration());
+            modelBuilder.ApplyConfiguration(new ProfileConfiguration());
         }
     }
 }

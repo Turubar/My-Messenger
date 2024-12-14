@@ -16,5 +16,9 @@ namespace Persistence.Entities
         public string PasswordHash { get; set; } = string.Empty;
 
         public DateTime RegisteredDate { get; set; }
+
+        public Guid ProfileId { get; set; }
+
+        public ProfileEntity? Profile { get; set; }
     }
 }
