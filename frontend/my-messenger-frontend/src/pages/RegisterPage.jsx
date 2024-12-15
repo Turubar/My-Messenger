@@ -1,7 +1,7 @@
 import { Alert, Box, Button, Checkbox, CircularProgress, FormControlLabel, Link, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { registerUserAPI } from '../api/users';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const MIN_LOGIN_LENGTH = 4;
 const MAX_LOGIN_LENGTH = 20;

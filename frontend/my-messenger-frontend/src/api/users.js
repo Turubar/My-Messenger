@@ -32,3 +32,13 @@ export const registerUserAPI = async (login, password) => {
         }
     }
 }
+
+export const authenticateUserAPI = async (login, password) => {
+    try {
+        await axios.post(URL + "/api/users/lo", {login, password})
+        return {severity: "success", message: "Вы успешно зарегистрировались", success: true};
+    }
+    catch (error) {
+
+    }
+}

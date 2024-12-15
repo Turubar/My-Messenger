@@ -1,22 +1,25 @@
 import './App.css'
 import { Route, Routes } from 'react-router-dom';
-import { HomePage, LoginPage, ProfilePage, RegisterPage, ErrorPage} from './pages'
+import { HomePage, LoginPage, ProfilePage, RegisterPage, ErrorPage } from './pages'
 import PrivateRoute from './utils/router/privateRoute';
+import Header from './components/Header/Header';
 
 function App() {
   return (
     <>
-        <Routes>
-          <Route path="register" element={<RegisterPage />} />
-          <Route path="login" element={<LoginPage />} />
+      {/* <Header /> */}
 
-          <Route element={<PrivateRoute />}>
-            <Route path="/" element={<HomePage />} />
-            <Route path="profile" element={<ProfilePage />} />
-          </Route>
+      <Routes>
+        <Route path="register" element={<RegisterPage />} />
+        <Route path="login" element={<LoginPage />} />
 
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
+        <Route element={<PrivateRoute />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="profile" element={<ProfilePage />} />
+        </Route>
+
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
     </>
   );
 }
