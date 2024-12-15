@@ -19,8 +19,7 @@ namespace Persistence.Configurations
 
             builder
                 .HasOne(p => p.Avatar)
-                .WithOne(a => a.Profile)
-                .HasForeignKey<ProfileEntity>(p => p.AvatarId);
+                .WithOne(a => a.Profile);
         }
     }
 }

@@ -20,9 +20,12 @@ services.AddDbContext<MyMessengerDbContext>(options =>
 });
 
 services.AddScoped<IUserRepository, UsersRepository>();
+services.AddScoped<IProfileRepository, ProfilesRepository>();
+
 services.AddScoped<UsersService>();
 
 services.AddScoped<IPasswordHasher, PasswordHasher>();
+services.AddScoped<ISearchTagGenerator, SearchTagGenerator>();
 
 builder.Services.AddCors(options =>
 {

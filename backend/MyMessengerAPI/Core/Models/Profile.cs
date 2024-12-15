@@ -12,13 +12,12 @@ namespace Core.Models
         // Публичные константы (для валидации и атрибутов dto)
 
         public const int MIN_DISPLAYNAME_LENGTH = 2;
-        public const int MAX_DISPLAYNAME_LENGTH = 20;
+        public const int MAX_DISPLAYNAME_LENGTH = 30;
 
         public const int MAX_STATUS_LENGTH = 50;
 
         public const int MAX_DESCRIPTION_LENGTH = 2000;
 
-        public const int MIN_SEARCHTAG_LENGTH = 2;
         public const int MAX_SEARCHTAG_LENGTH = 20;
 
         // ---
@@ -67,8 +66,8 @@ namespace Core.Models
             if (description.Length > MAX_DESCRIPTION_LENGTH)
                 return Result.Failure<Profile>($"Длина описания должна быть не больше [{MAX_DESCRIPTION_LENGTH}] символов");
 
-            if (string.IsNullOrEmpty(searchTag) || searchTag.Length < MIN_SEARCHTAG_LENGTH || searchTag.Length > MAX_SEARCHTAG_LENGTH)
-                return Result.Failure<Profile>($"Длина тега должна быть [{MIN_SEARCHTAG_LENGTH} - {MAX_SEARCHTAG_LENGTH}] символов");
+            if (searchTag.Length > MAX_SEARCHTAG_LENGTH)
+                return Result.Failure<Profile>($"Длина поискового тега должна быть не больше [{MAX_SEARCHTAG_LENGTH}] символов");
 
             // ---
 
