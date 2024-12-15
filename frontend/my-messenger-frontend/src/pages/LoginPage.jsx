@@ -1,5 +1,6 @@
 import { Alert, Box, Button, Checkbox, CircularProgress, FormControlLabel, Link, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import { loginUserAPI } from '../api/users';
 
 
 const LoginPage = () => {
@@ -14,8 +15,35 @@ const LoginPage = () => {
         visability: false
       });
 
-    const authenticateUser = async () => {
+
+      
+    const loginUser = async () => {
       // валидация
+
+
+      setShowProgress(prev => prev = true);
+
+      const alert = await loginUserAPI(login, password);
+      showAlert(alert.severity, alert.message);
+
+      setShowProgress(prev => prev = false);
+    }
+
+    const showAlert = (severity, message) => {
+      setAlert({
+        severity: severity,
+        message: message,
+        visability: true
+      })
+  
+      setTimeout(() => {
+        setAlert(prev => {
+          return {
+            ...prev,
+            visability: false
+          }
+        })
+      }, 4000)
     }
     
   return (
@@ -97,7 +125,7 @@ const LoginPage = () => {
 
         <Button
           variant="contained"
-          // onClick={registerUser}
+          onClick={loginUser}
           size='large'
           sx={{
             padding: '12px',

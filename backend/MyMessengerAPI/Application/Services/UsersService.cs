@@ -15,18 +15,18 @@ namespace Application.Services
         private readonly IUserRepository _userRepository;
         private readonly IProfileRepository _prfoileRepository;
         private readonly IPasswordHasher _passwordHasher;
-        private readonly ISearchTagGenerator _searchTagGenerator;
+        private readonly IJwtProvider _jwtProvider;
 
-        public UsersService(IUserRepository userRepository, IProfileRepository profileRepository, IPasswordHasher passwordHasher, ISearchTagGenerator searchTagGenerator)
+        public UsersService(IUserRepository userRepository, IProfileRepository profileRepository, IPasswordHasher passwordHasher, IJwtProvider jwtProvider)
         {
             _userRepository = userRepository;
             _prfoileRepository = profileRepository;
             _passwordHasher = passwordHasher;
-            _searchTagGenerator = searchTagGenerator;
+            _jwtProvider = jwtProvider;
         }
 
         // Регистарция
-        public async Task<Result> Registration(string login, string password)
+        public async Task<Result<User>> Registration(string login, string password)
         {
             // Создание нового пользователя
 
@@ -45,11 +45,11 @@ namespace Application.Services
 
             // ---
 
-            // Создние профиля для нового пользователя
+            // Создание профиля для нового пользователя
 
             var newProfile = Profile.Create(Guid.NewGuid(), "Новый пользователь", "", "", "", null, newUser.Value);
             if (newProfile.IsFailure)
-                return Result.Failure<Profile>(newProfile.Error);
+                return Result.Failure<User>(newProfile.Error);
 
             // ---
 
@@ -61,9 +61,32 @@ namespace Application.Services
 
             var profile = await _prfoileRepository.Add(newProfile.Value);
             if (profile.IsFailure)
-                return Result.Failure<Profile>(profile.Error);
+                return Result.Failure<User>(profile.Error);
 
             return newUser;
+
+            // ---
+        }
+
+        public async Task<Result<string>> Login(string login, string password)
+        {
+            // Ищем нужного пользователя и проверяем пароль
+
+            var user = await _userRepository.GetByLogin(login);
+            if (user.IsFailure)
+                return Result.Failure<string>(user.Error);
+                
+            var result = _passwordHasher.Verify(password, user.Value.PasswordHash);
+            if (!result)
+                return Result.Failure<string>("Неверный логин или пароль");
+
+            // ---
+
+            // Создаем токен доступа
+
+            var token = _jwtProvider.GenerateToken(user.Value);
+
+            return Result.Success(token);
 
             // ---
         }

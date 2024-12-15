@@ -1,4 +1,5 @@
 ﻿using Application.Services;
+using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Mvc;
 using MyMessengerAPI.Contracts.Users;
 
@@ -31,6 +32,25 @@ namespace MyMessengerAPI.Controllers
                         message = result.Error
                     }
                 });
+        }
+
+        [Route("login")]
+        [HttpPost]
+        public async Task<ActionResult> Login(LoginUserRequest request, UsersService usersService)
+        {
+            var token = await usersService.Login(request.Login, request.Password);
+            if (token.IsFailure)
+                return BadRequest(new
+                {
+                    errors = new
+                    {
+                        message = token.Error
+                    }
+                });
+
+            Response.Cookies.Append("token", token.Value);
+
+            return Ok();
         }
     }
 }

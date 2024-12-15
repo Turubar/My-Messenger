@@ -2,6 +2,7 @@ using Application.Interfaces.Authentication;
 using Application.Interfaces.Repositories;
 using Application.Services;
 using Infrastructure;
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -19,13 +20,15 @@ services.AddDbContext<MyMessengerDbContext>(options =>
     options.UseNpgsql(configuration.GetConnectionString("Connection"));
 });
 
+services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
+
 services.AddScoped<IUserRepository, UsersRepository>();
 services.AddScoped<IProfileRepository, ProfilesRepository>();
 
 services.AddScoped<UsersService>();
 
+services.AddScoped<IJwtProvider, JwtProvider>();
 services.AddScoped<IPasswordHasher, PasswordHasher>();
-services.AddScoped<ISearchTagGenerator, SearchTagGenerator>();
 
 builder.Services.AddCors(options =>
 {
@@ -41,9 +44,19 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
+
+app.UseCookiePolicy(new CookiePolicyOptions
+{
+    MinimumSameSitePolicy = SameSiteMode.Strict,
+    HttpOnly = HttpOnlyPolicy.Always,
+    Secure = CookieSecurePolicy.Always
+});
 
 app.UseCors();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 
