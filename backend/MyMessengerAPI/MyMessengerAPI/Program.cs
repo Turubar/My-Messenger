@@ -5,6 +5,7 @@ using Infrastructure;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MyMessengerAPI.Extensions;
 using Persistence;
 using Persistence.Repositories;
 
@@ -13,22 +14,14 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
 
+services.AddApiAuthentication(configuration);
+
 services.AddControllers();
 
 services.AddDbContext<MyMessengerDbContext>(options =>
 {
     options.UseNpgsql(configuration.GetConnectionString("Connection"));
 });
-
-services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
-
-services.AddScoped<IUserRepository, UsersRepository>();
-services.AddScoped<IProfileRepository, ProfilesRepository>();
-
-services.AddScoped<UsersService>();
-
-services.AddScoped<IJwtProvider, JwtProvider>();
-services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 builder.Services.AddCors(options =>
 {
@@ -42,9 +35,22 @@ builder.Services.AddCors(options =>
     });
 });
 
+services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
+services.AddScoped<JwtOptions>();
+
+services.AddScoped<IUserRepository, UsersRepository>();
+services.AddScoped<IProfileRepository, ProfilesRepository>();
+
+services.AddScoped<UsersService>();
+
+services.AddScoped<IJwtProvider, JwtProvider>();
+services.AddScoped<IPasswordHasher, PasswordHasher>();
+
 var app = builder.Build();
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseCookiePolicy(new CookiePolicyOptions
 {
@@ -52,8 +58,6 @@ app.UseCookiePolicy(new CookiePolicyOptions
     HttpOnly = HttpOnlyPolicy.Always,
     Secure = CookieSecurePolicy.Always
 });
-
-app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();

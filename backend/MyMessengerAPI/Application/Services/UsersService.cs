@@ -68,6 +68,7 @@ namespace Application.Services
             // ---
         }
 
+        // Аутентификация
         public async Task<Result<string>> Login(string login, string password)
         {
             // Ищем нужного пользователя и проверяем пароль
