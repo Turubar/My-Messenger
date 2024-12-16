@@ -1,6 +1,7 @@
 ﻿using Application.Services;
 using CSharpFunctionalExtensions;
 using Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MyMessengerAPI.Contracts.Users;
@@ -53,7 +54,8 @@ namespace MyMessengerAPI.Controllers
                     HttpOnly = true,
                     Secure = true,
                     SameSite = SameSiteMode.Strict,
-                    Expires = DateTimeOffset.UtcNow.AddHours(_jwtOptions.Value.ExpiresHours)
+                    Expires = DateTimeOffset.UtcNow.AddHours(_jwtOptions.Value.ExpiresHours),
+                    MaxAge = TimeSpan.FromHours(_jwtOptions.Value.ExpiresHours)
                 });
 
                 return Ok();
@@ -68,6 +70,26 @@ namespace MyMessengerAPI.Controllers
                     }
                 });
             }
+        }
+
+        // Маршрут Профиль пользователя
+        [Route("profile")]
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult> Profile()
+        {
+
+            return Ok("успех");
+        }
+
+        [Route("logout")]
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult> Logout()
+        {
+            Response.Cookies.Delete("token");
+
+            return Ok();
         }
     }
 }

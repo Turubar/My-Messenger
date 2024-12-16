@@ -28,7 +28,7 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(policy =>
     {
         policy
-        .WithOrigins("http://localhost:5173")
+        .WithOrigins("https://localhost:5173")
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials();
@@ -47,6 +47,15 @@ services.AddScoped<IJwtProvider, JwtProvider>();
 services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 var app = builder.Build();
+
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Append("X-Content-Type-Options", "nosniff");
+    context.Response.Headers.Append("X-Xss-Protection", "1; mode=block");
+    context.Response.Headers.Append("X-Frame-Options", "DENY");
+
+    await next();
+});
 
 app.UseHttpsRedirection();
 

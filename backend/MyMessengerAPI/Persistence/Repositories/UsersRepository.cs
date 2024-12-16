@@ -39,7 +39,7 @@ namespace Persistence.Repositories
             }
             catch
             {
-                return Result.Failure("Что-то пошло не так...");
+                return Result.Failure("Что-то пошло не так, попробуйте позже");
             }
         }
 
@@ -58,7 +58,7 @@ namespace Persistence.Repositories
             }
             catch
             {
-                return Result.Failure<User>("Что-то пошло не так...");
+                return Result.Failure<User>("Что-то пошло не так, попробуйте позже");
             }
         }
     }
