@@ -18,10 +18,7 @@ services.AddApiAuthentication(configuration);
 
 services.AddControllers();
 
-services.AddDbContext<MyMessengerDbContext>(options =>
-{
-    options.UseNpgsql(configuration.GetConnectionString("Connection"));
-});
+services.AddDbContext<MyMessengerDbContext>();
 
 builder.Services.AddCors(options =>
 {

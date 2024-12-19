@@ -19,10 +19,10 @@ namespace Persistence.Entities
 
         public string SearchTag { get; set; } = string.Empty;
 
-        public AvatarEntity? Avatar { get; set; }
-
         public Guid UserId { get; set; }
 
-        public UserEntity? User { get; set; }
+        public UserEntity User { get; set; } = null!;
+
+        public AvatarEntity? Avatar { get; set; }
     }
 }

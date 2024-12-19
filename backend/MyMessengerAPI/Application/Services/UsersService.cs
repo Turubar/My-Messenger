@@ -13,14 +13,14 @@ namespace Application.Services
     public class UsersService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IProfileRepository _prfoileRepository;
+        private readonly IProfileRepository _profileRepository;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IJwtProvider _jwtProvider;
 
         public UsersService(IUserRepository userRepository, IProfileRepository profileRepository, IPasswordHasher passwordHasher, IJwtProvider jwtProvider)
         {
             _userRepository = userRepository;
-            _prfoileRepository = profileRepository;
+            _profileRepository = profileRepository;
             _passwordHasher = passwordHasher;
             _jwtProvider = jwtProvider;
         }
@@ -59,7 +59,7 @@ namespace Application.Services
             if (user.IsFailure) 
                 return Result.Failure<User>(user.Error);
 
-            var profile = await _prfoileRepository.Add(newProfile.Value);
+            var profile = await _profileRepository.Add(newProfile.Value);
             if (profile.IsFailure)
                 return Result.Failure<User>(profile.Error);
 

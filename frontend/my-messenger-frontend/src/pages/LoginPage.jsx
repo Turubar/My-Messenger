@@ -1,51 +1,61 @@
 import { Alert, Box, Button, Checkbox, CircularProgress, FormControlLabel, Link, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { loginUserAPI } from '../api/users';
+import { useNavigate } from 'react-router-dom';
+
 
 
 const LoginPage = () => {
-    const [login, setLogin] = useState("");
-    const [password, setPassword] = useState("");
-    const [showPassword, setShowPassword] = useState(false);
-    const [showProgress, setShowProgress] = useState(false);
+  const navigate = useNavigate();
 
-    const [alert, setAlert] = useState({
-        severity: "success",
-        message: "",
-        visability: false
-      });
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showProgress, setShowProgress] = useState(false);
 
-
-      
-    const loginUser = async () => {
-      // валидация
+  const [alert, setAlert] = useState({
+    severity: "success",
+    message: "",
+    visability: false
+  });
 
 
-      setShowProgress(prev => prev = true);
 
-      const alert = await loginUserAPI(login, password);
-      showAlert(alert.severity, alert.message);
-
-      setShowProgress(prev => prev = false);
+  const loginUser = async () => {
+    if (login.length <= 0 || password <= 0) {
+      showAlert("warning", "Не все поля заполнены");
+      return;
     }
 
-    const showAlert = (severity, message) => {
-      setAlert({
-        severity: severity,
-        message: message,
-        visability: true
+    setShowProgress(prev => prev = true);
+
+    const alert = await loginUserAPI(login, password);
+    showAlert(alert.severity, alert.message);
+
+    setShowProgress(prev => prev = false);
+
+    if (alert.success) {
+      navigate("/profile");
+    }
+  }
+
+  const showAlert = (severity, message) => {
+    setAlert({
+      severity: severity,
+      message: message,
+      visability: true
+    })
+
+    setTimeout(() => {
+      setAlert(prev => {
+        return {
+          ...prev,
+          visability: false
+        }
       })
-  
-      setTimeout(() => {
-        setAlert(prev => {
-          return {
-            ...prev,
-            visability: false
-          }
-        })
-      }, 4000)
-    }
-    
+    }, 4000)
+  }
+
   return (
     <Box
       display={'flex'}
@@ -108,10 +118,10 @@ const LoginPage = () => {
           <FormControlLabel
             control={<Checkbox
               onChange={(e) => setShowPassword(e.target.checked)}
-              sx={{ 
+              sx={{
                 width: '18px',
-                height: '18px', 
-                marginLeft: '5px' 
+                height: '18px',
+                marginLeft: '5px'
               }}
             />}
             label="Показать пароль"
@@ -152,7 +162,7 @@ const LoginPage = () => {
       </Alert>
       <CircularProgress sx={{
         visibility: showProgress ? 'visible' : 'hidden'
-      }}/>
+      }} />
     </Box>
   );
 };

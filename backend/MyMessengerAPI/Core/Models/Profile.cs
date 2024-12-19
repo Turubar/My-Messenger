@@ -23,7 +23,7 @@ namespace Core.Models
         // ---
 
         // Приватный конструктор
-        private Profile(Guid id, string displayName, string status, string description, string searchTag, Avatar? image, User? user)
+        private Profile(Guid id, string displayName, string status, string description, string searchTag, Avatar? image, User user)
         {
             Id = id;
             DisplayName = displayName;
@@ -48,12 +48,12 @@ namespace Core.Models
 
         public Avatar? Avatar { get; }
 
-        public User? User { get; }
+        public User User { get; }
 
         // ---
 
         // Публичный статический метод для валидации и создания модели UserProfile
-        public static Result<Profile> Create(Guid id, string displayName, string status, string description, string searchTag, Avatar? avatar, User? user)
+        public static Result<Profile> Create(Guid id, string displayName, string status, string description, string searchTag, Avatar? avatar, User user)
         {
             // Валидация свойств
 

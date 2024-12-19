@@ -72,6 +72,8 @@ namespace MyMessengerAPI.Controllers
             }
         }
 
+
+
         // Маршрут Профиль пользователя
         [Route("profile")]
         [HttpGet]

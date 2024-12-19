@@ -8,14 +8,15 @@ namespace Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<AvatarEntity> builder)
         {
-            builder.ToTable("Avatars");
-
-            builder.HasKey(u => u.Id);
+            builder
+                .ToTable("Avatars")
+                .HasKey(u => u.Id);
 
             builder
                 .HasOne(a => a.Profile)
                 .WithOne(p => p.Avatar)
-                .HasForeignKey<AvatarEntity>(a => a.ProfileId);
+                .HasForeignKey<AvatarEntity>(a => a.ProfileId)
+                .IsRequired();
         }
     }
 }

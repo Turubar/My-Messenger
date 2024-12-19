@@ -29,7 +29,7 @@ namespace Persistence.Repositories
                     Id = user.Id,
                     Login = user.Login,
                     PasswordHash = user.PasswordHash,
-                    RegisteredDate = user.RegisteredDate,
+                    RegisteredDate = user.RegisteredDate
                 };
 
                 await _dbContext.Users.AddAsync(userEntity);
@@ -48,8 +48,8 @@ namespace Persistence.Repositories
             try
             {
                 var userEntity = await _dbContext.Users
-                .AsNoTracking()
-                .FirstOrDefaultAsync(u => u.Login == login);
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(u => u.Login == login);
 
                 if (userEntity != null)
                     return User.Create(userEntity.Id, userEntity.Login, userEntity.PasswordHash, userEntity.RegisteredDate);

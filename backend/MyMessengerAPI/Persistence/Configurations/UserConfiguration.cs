@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Core.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Persistence.Entities;
 using System;
@@ -13,9 +14,12 @@ namespace Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<UserEntity> builder)
         {
-            builder.ToTable("Users");
+            builder
+                .ToTable("Users")
+                .HasKey(u => u.Id);
 
-            builder.HasKey(u => u.Id);
+            builder.Property(u => u.Login)
+                .HasMaxLength(User.MAX_LOGIN_LENGTH);
 
             builder
                 .HasOne(u => u.Profile)

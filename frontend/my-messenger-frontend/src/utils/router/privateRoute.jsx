@@ -1,10 +1,17 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { useEffect } from "react";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 const PrivateRoute = () => {
-    const auth = true;
+    const location = useLocation();
+
+    useEffect(() => {
+        console.log(location.pathname);
+    })
 
     return (
-        auth ? <Outlet /> : <Navigate to="login" />
+       <div>
+        123
+       </div>
     );
 };
 
