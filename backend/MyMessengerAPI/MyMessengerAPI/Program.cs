@@ -39,6 +39,7 @@ services.AddScoped<IUserRepository, UsersRepository>();
 services.AddScoped<IProfileRepository, ProfilesRepository>();
 
 services.AddScoped<UsersService>();
+services.AddScoped<ProfilesService>();
 
 services.AddScoped<IJwtProvider, JwtProvider>();
 services.AddScoped<IPasswordHasher, PasswordHasher>();

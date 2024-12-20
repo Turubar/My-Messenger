@@ -10,5 +10,7 @@ namespace Application.Interfaces.Authentication
     public interface IJwtProvider
     {
         string GenerateToken(User user);
+
+        Guid GetIdFromToken(string token);
     }
 }

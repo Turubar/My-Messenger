@@ -3,7 +3,6 @@ using Core.Models;
 using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Entities;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Persistence.Repositories
 {
@@ -41,6 +40,40 @@ namespace Persistence.Repositories
             }
         }
 
+        public async Task<Result<Profile>> GetByUserId(Guid userId)
+        {
+            try
+            {
+                var profile = await _dbContext.Profiles
+                    .AsNoTracking()
+                    .Include(p => p.User)
+                    .Include(p => p.Avatar)
+                    .FirstOrDefaultAsync(p => p.UserId == userId);
+
+                // Маппинг и возврат результата
+                if (profile != null)
+                {
+                    var user = User.Create(profile.User.Id, profile.User.Login, profile.User.PasswordHash, profile.User.RegisteredDate);
+
+                    if (profile.Avatar != null)
+                    {
+                        Result<Avatar> avatar = Avatar.Create(profile.Avatar.Id, profile.Avatar.FileName);
+                        return Profile.Create(profile.Id, profile.DisplayName, profile.Status, profile.Description, profile.SearchTag, avatar.Value, user.Value);
+                    }
+                    else
+                        return Profile.Create(profile.Id, profile.DisplayName, profile.Status, profile.Description, profile.SearchTag, null, user.Value);
+                }
+                else
+                    return Result.Failure<Profile>("Профиль не найден");
+            }
+            catch
+            {
+                // логирование ошибки
+
+                return Result.Failure<Profile>("Что-то пошло не так, попробуйте позже");
+            }
+        }
+
         public async Task<Result<Profile>> GetBySearchTag(string searchTag)
         {
             try
@@ -51,6 +84,7 @@ namespace Persistence.Repositories
                     .Include(p => p.Avatar)
                     .FirstOrDefaultAsync(p => p.SearchTag == searchTag);
 
+                // Маппинг и возврат результата
                 if (profile != null)
                 {
                     var user = User.Create(profile.User.Id, profile.User.Login, profile.User.PasswordHash, profile.User.RegisteredDate);
@@ -68,6 +102,8 @@ namespace Persistence.Repositories
             }
             catch
             {
+                // логирование ошибки
+
                 return Result.Failure<Profile>("Что-то пошло не так, попробуйте позже");
             }
         }

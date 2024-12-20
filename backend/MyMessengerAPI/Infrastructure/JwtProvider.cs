@@ -34,5 +34,24 @@ namespace Infrastructure
 
             return tokenValue;
         }
+
+        public Guid GetIdFromToken(string token)
+        {
+            var jwtHandler = new JwtSecurityTokenHandler();
+
+            var jwtToken = jwtHandler.ReadJwtToken(token);
+
+            var claims = jwtToken.Claims.FirstOrDefault(u => u.Type == "userId");
+
+            if (claims == null)
+                return Guid.Empty;
+
+            var result = Guid.TryParse(claims.Value, out Guid userId);
+
+            if (!result)
+                return Guid.Empty;
+
+            return userId;
+        }
     }
 }

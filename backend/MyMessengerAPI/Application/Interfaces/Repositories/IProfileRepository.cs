@@ -12,6 +12,8 @@ namespace Application.Interfaces.Repositories
     {
         Task<Result> Add(Profile profile);
 
+        Task<Result<Profile>> GetByUserId(Guid userId);
+
         Task<Result<Profile>> GetBySearchTag(string searchTag);
     }
 }

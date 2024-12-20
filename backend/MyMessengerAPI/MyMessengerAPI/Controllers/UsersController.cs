@@ -4,6 +4,7 @@ using Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using MyMessengerAPI.Contracts.Profiles;
 using MyMessengerAPI.Contracts.Users;
 
 namespace MyMessengerAPI.Controllers
@@ -24,9 +25,9 @@ namespace MyMessengerAPI.Controllers
         // Маршрут для регистрации новых пользователей
         [Route("register")]
         [HttpPost]
-        public async Task<ActionResult> Registration(RegistrationUserRequest request, UsersService usersService)
+        public async Task<ActionResult> Registration(RegistrationUserRequest request)
         {
-            var result = await usersService.Registration(request.Login, request.Password);
+            var result = await _usersService.Registration(request.Login, request.Password);
 
             if (result.IsSuccess)
                 return Ok();
@@ -43,9 +44,9 @@ namespace MyMessengerAPI.Controllers
         // Маршрут для аутентификации пользователей
         [Route("login")]
         [HttpPost]
-        public async Task<ActionResult> Login(LoginUserRequest request, UsersService usersService)
+        public async Task<ActionResult> Login(LoginUserRequest request)
         {
-            var token = await usersService.Login(request.Login, request.Password);
+            var token = await _usersService.Login(request.Login, request.Password);
 
             if (token.IsSuccess)
             {
@@ -72,18 +73,6 @@ namespace MyMessengerAPI.Controllers
             }
         }
 
-
-
-        // Маршрут Профиль пользователя
-        [Route("profile")]
-        [HttpGet]
-        [Authorize]
-        public async Task<ActionResult> Profile()
-        {
-
-            return Ok("успех");
-        }
-
         [Route("logout")]
         [HttpGet]
         [Authorize]
@@ -91,7 +80,7 @@ namespace MyMessengerAPI.Controllers
         {
             Response.Cookies.Delete("token");
 
-            return Ok();
+            return Ok("Успех");
         }
     }
 }

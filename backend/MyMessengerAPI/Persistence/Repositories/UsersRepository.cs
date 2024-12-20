@@ -39,6 +39,8 @@ namespace Persistence.Repositories
             }
             catch
             {
+                // логирование ошибки
+
                 return Result.Failure("Что-то пошло не так, попробуйте позже");
             }
         }
@@ -51,6 +53,7 @@ namespace Persistence.Repositories
                     .AsNoTracking()
                     .FirstOrDefaultAsync(u => u.Login == login);
 
+                // Маппинг и возврат результата
                 if (userEntity != null)
                     return User.Create(userEntity.Id, userEntity.Login, userEntity.PasswordHash, userEntity.RegisteredDate);
                 else
@@ -58,6 +61,8 @@ namespace Persistence.Repositories
             }
             catch
             {
+                // логирование ошибки
+
                 return Result.Failure<User>("Что-то пошло не так, попробуйте позже");
             }
         }
