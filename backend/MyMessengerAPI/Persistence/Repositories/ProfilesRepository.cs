@@ -15,7 +15,7 @@ namespace Persistence.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<Result> Add(Profile profile)
+        public async Task<Result> AddProfile(Profile profile)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace Persistence.Repositories
             }
         }
 
-        public async Task<Result<Profile>> GetByUserId(Guid userId)
+        public async Task<Result<Profile>> GetProfileByUserId(Guid userId)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace Persistence.Repositories
             }
         }
 
-        public async Task<Result<Profile>> GetBySearchTag(string searchTag)
+        public async Task<Result<Profile>> GetProfileBySearchTag(string searchTag)
         {
             try
             {

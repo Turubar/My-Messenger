@@ -10,8 +10,8 @@ namespace Application.Interfaces.Repositories
 {
     public interface IUserRepository
     {
-        Task<Result> Add(User user);
+        Task<Result> AddUser(User user);
 
-        Task<Result<User>> GetByLogin(string login);
+        Task<Result<User>> GetUserByLogin(string login);
     }
 }

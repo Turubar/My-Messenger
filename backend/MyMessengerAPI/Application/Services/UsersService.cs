@@ -34,7 +34,7 @@ namespace Application.Services
                 return Result.Failure<User>(newUser.Error);
 
             // Проверяем логин на уникальность
-            var existingUser = await _userRepository.GetByLogin(newUser.Value.Login);
+            var existingUser = await _userRepository.GetUserByLogin(newUser.Value.Login);
             if (existingUser.IsSuccess) 
                 return Result.Failure<User>("Этот логин уже занят");
 
@@ -42,7 +42,7 @@ namespace Application.Services
 
             // Создание профиля для нового пользователя
 
-            var newProfile = Profile.Create(Guid.NewGuid(), "Новый пользователь", "", "", "", null, newUser.Value);
+            var newProfile = Profile.Create(Guid.NewGuid(), "Новый пользователь", "Отсутствует", "Привет, я новый пользователь!", "@не_настроен", null, newUser.Value);
             if (newProfile.IsFailure)
                 return Result.Failure<User>(newProfile.Error);
 
@@ -50,11 +50,11 @@ namespace Application.Services
 
             // Добавляем пользователя и его профиль в базу данных
 
-            var user = await _userRepository.Add(newUser.Value);
+            var user = await _userRepository.AddUser(newUser.Value);
             if (user.IsFailure) 
                 return Result.Failure<User>(user.Error);
 
-            var profile = await _profileRepository.Add(newProfile.Value);
+            var profile = await _profileRepository.AddProfile(newProfile.Value);
             if (profile.IsFailure)
                 return Result.Failure<User>(profile.Error);
 
@@ -68,7 +68,7 @@ namespace Application.Services
         {
             // Ищем нужного пользователя и проверяем пароль
 
-            var user = await _userRepository.GetByLogin(login);
+            var user = await _userRepository.GetUserByLogin(login);
             if (user.IsFailure)
                 return Result.Failure<string>(user.Error);
                 

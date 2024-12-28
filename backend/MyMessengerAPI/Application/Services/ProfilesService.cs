@@ -16,14 +16,24 @@ namespace Application.Services
             _jwtProvider = jwtProvider;
         }
 
-        // Получние профиля пользователя
-        public async Task<Result<Profile>> GetProfile(string token)
+        // Получние профиля пользователя по его токену
+        public async Task<Result<Profile>> GetProfileByToken(string token)
         {
             var userId = _jwtProvider.GetIdFromToken(token);
             if (userId == Guid.Empty)
                 return Result.Failure<Profile>("Не удалось получить Id");
 
-            var profile = await _profileRepository.GetByUserId(userId);
+            var profile = await _profileRepository.GetProfileByUserId(userId);
+            if (profile.IsSuccess)
+                return profile;
+            else
+                return Result.Failure<Profile>(profile.Error);
+        }
+
+        // Получние профиля пользователя по searchTag
+        public async Task<Result<Profile>> GetProfileBySearchTag(string searchTag)
+        {
+            var profile = await _profileRepository.GetProfileBySearchTag(searchTag);
             if (profile.IsSuccess)
                 return profile;
             else

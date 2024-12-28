@@ -20,7 +20,7 @@ namespace Persistence.Repositories
             _dbContext = context;
         }
 
-        public async Task<Result> Add(User user)
+        public async Task<Result> AddUser(User user)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace Persistence.Repositories
             }
         }
 
-        public async Task<Result<User>> GetByLogin(string login)
+        public async Task<Result<User>> GetUserByLogin(string login)
         {
             try
             {

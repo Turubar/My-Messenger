@@ -10,10 +10,10 @@ namespace Application.Interfaces.Repositories
 {
     public interface IProfileRepository
     {
-        Task<Result> Add(Profile profile);
+        Task<Result> AddProfile(Profile profile);
 
-        Task<Result<Profile>> GetByUserId(Guid userId);
+        Task<Result<Profile>> GetProfileByUserId(Guid userId);
 
-        Task<Result<Profile>> GetBySearchTag(string searchTag);
+        Task<Result<Profile>> GetProfileBySearchTag(string searchTag);
     }
 }

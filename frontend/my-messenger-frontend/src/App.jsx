@@ -12,7 +12,7 @@ function App() {
 
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<HomePage />} />
-          <Route path="profile" element={<ProfilePage />} />
+          <Route path="profile/:searchTag?" element={<ProfilePage />} />
         </Route>
 
         <Route path="*" element={<ErrorPage />} />
